@@ -1,0 +1,1887 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>inayatransports.fr - Devis</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      /* Slider styles - Enhanced Professional Design */
+      .tariffs {
+        padding: 60px 0;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      }
+
+      .tariffs h2 {
+        text-align: center;
+        margin-bottom: 50px;
+        color: #333;
+        font-size: 2.5rem;
+        position: relative;
+        padding-bottom: 15px;
+      }
+
+      .tariffs h2::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 3px;
+        background: linear-gradient(90deg, #00d2ff 0%, #3a7bd5 100%);
+      }
+
+      .tariffs-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 50px;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .tariff-item {
+        margin-bottom: 40px;
+        border-radius: 15px;
+        background: #fff;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        overflow: hidden;
+        transition: all 0.4s ease;
+        position: relative;
+      }
+
+      .tariff-item:hover {
+        transform: translateY(-15px);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+      }
+
+      .tariff-item h3 {
+        margin: 0;
+        padding: 25px;
+        text-align: center;
+        color: #333;
+        font-size: 1.8rem;
+        letter-spacing: 1px;
+        border-bottom: 1px solid #eee;
+        background: #f9f9f9;
+      }
+
+      .slider-container {
+        position: relative;
+        overflow: hidden;
+        margin: 0;
+        padding-top: 75%;
+        /* 4:3 Aspect Ratio for larger display */
+      }
+
+      .slider {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        transition: transform 0.6s cubic-bezier(0.45, 0, 0.55, 1);
+      }
+
+      .slide {
+        min-width: 100%;
+        height: 100%;
+        flex: 0 0 auto;
+        position: relative;
+      }
+
+      .slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+      }
+
+      .slide-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(
+          0deg,
+          rgba(0, 0, 0, 0.7) 0%,
+          rgba(0, 0, 0, 0) 100%
+        );
+        padding: 20px;
+        color: white;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+      }
+
+      .slide:hover .slide-overlay {
+        opacity: 1;
+      }
+
+      .slider-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(255, 255, 255, 0.8);
+        color: #333;
+        border: none;
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        font-size: 1.2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        opacity: 0;
+      }
+
+      .slider-container:hover .slider-btn {
+        opacity: 1;
+      }
+
+      .slider-btn:hover {
+        background: #fff;
+        transform: translateY(-50%) scale(1.1);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .prev {
+        left: 15px;
+      }
+
+      .next {
+        right: 15px;
+      }
+
+      /* Slide indicators */
+      .slide-indicators {
+        position: absolute;
+        bottom: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 8px;
+        z-index: 2;
+      }
+
+      .indicator {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .indicator.active {
+        background: #fff;
+        transform: scale(1.2);
+      }
+
+      .tariff-info {
+        padding: 25px;
+        background: linear-gradient(to bottom, #f9f9f9, #fff);
+        text-align: center;
+      }
+
+      .cta-button {
+        display: block;
+        width: 100%;
+        padding: 20px;
+        background: linear-gradient(90deg, #00d2ff 0%, #3a7bd5 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.3rem;
+        font-weight: bold;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-align: center;
+        text-decoration: none;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .cta-button:hover {
+        background: linear-gradient(90deg, #3a7bd5 0%, #00d2ff 100%);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Pop-out Card Slider */
+      .tariff-item {
+        position: relative;
+      }
+
+      .pop-out-trigger {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: rgba(255, 255, 255, 0.8);
+        color: #333;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 5;
+        transition: all 0.3s ease;
+        opacity: 0;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .bg-white:hover .pop-out-trigger {
+        opacity: 1;
+      }
+
+      .pop-out-trigger:hover {
+        background: white;
+        transform: scale(1.1);
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .pop-out-card {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.9);
+        width: 90%;
+        max-width: 1200px;
+        height: 90vh;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+        display: none;
+        opacity: 0;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+      }
+
+      .pop-out-card.active {
+        display: flex;
+        flex-direction: column;
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+
+      .pop-out-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 25px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .pop-out-header h3 {
+        margin: 0;
+        font-size: 2rem;
+        color: #333;
+      }
+
+      .pop-out-close {
+        background: none;
+        border: none;
+        font-size: 2rem;
+        color: #777;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .pop-out-close:hover {
+        color: #333;
+        transform: scale(1.1);
+      }
+
+      .pop-out-slider-container {
+        position: relative;
+        width: 100%;
+        flex: 1;
+        padding-top: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+
+      .pop-out-slider {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        transition: transform 0.5s cubic-bezier(0.45, 0, 0.55, 1);
+      }
+
+      .pop-out-slide {
+        min-width: 100%;
+        height: 100%;
+        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .pop-out-slide img {
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        object-position: center;
+      }
+
+      .pop-out-navigation {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 25px;
+      }
+
+      .pop-out-indicators {
+        display: flex;
+        gap: 10px;
+      }
+
+      .pop-out-indicator {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #ddd;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .pop-out-indicator.active {
+        background: #3a7bd5;
+        transform: scale(1.2);
+      }
+
+      .pop-out-nav-btn {
+        background: linear-gradient(90deg, #00d2ff 0%, #3a7bd5 100%);
+        color: white;
+        border: none;
+        border-radius: 30px;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .pop-out-nav-btn:hover {
+        background: linear-gradient(90deg, #3a7bd5 0%, #00d2ff 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .overlay-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 999;
+        display: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .overlay-bg.active {
+        display: block;
+        opacity: 1;
+      }
+
+      .hero-text {
+        text-align: center;
+        padding: 50px 20px;
+        background: rgba(0, 0, 0, 0.6);
+        /* Transparent black */
+        color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        margin-bottom: 20px;
+      }
+
+      .hero-text h2 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .hero-text p {
+        font-size: 1.2rem;
+        font-weight: 300;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+      }
+
+      @media (max-width: 600px) {
+        .reservation-form {
+          margin-top: 3cm;
+          width: 90%;
+          padding: 10px;
+          font-size: 0.9rem;
+          margin-left: auto;
+          margin-right: auto;
+        }
+      }
+
+      .language-icon {
+        width: 20px;
+        /* Adjust size as needed */
+        filter: brightness(0) invert(1);
+        /* Make the icon white */
+      }
+
+      .language-dropdown {
+        position: relative;
+        display: inline-block;
+      }
+
+      .language-dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: black;
+        min-width: 100px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        border-radius: 5px;
+      }
+
+      .language-dropdown-content a {
+        color: white;
+        padding: 10px 15px;
+        text-decoration: none;
+        display: block;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .language-dropdown-content a:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+
+      .language-dropdown:hover .language-dropdown-content {
+        display: block;
+      }
+
+      /* RTL Support for Arabic */
+      .rtl {
+        direction: rtl;
+        text-align: right;
+      }
+
+      /* Layout spacing in RTL mode */
+      .rtl header {
+        padding-right: 2cm;
+        /* Add 2cm space on the right side */
+        padding-left: 2cm;
+        /* Balance with equal space on left side */
+      }
+
+      /* Website name styling in RTL */
+      .rtl .logo {
+        text-align: right;
+        margin-right: 1cm;
+        /* Add space after the logo in RTL */
+      }
+
+      .rtl .logo h1 {
+        font-weight: bold;
+      }
+
+      /* Menu spacing in RTL mode */
+      .rtl .nav-menu ul {
+        padding-left: 2cm;
+        /* Space on the left side in RTL mode */
+        padding-right: 2cm;
+        /* Space on the right side in RTL mode */
+        justify-content: space-between;
+      }
+
+      /* Hamburger menu in RTL */
+      .rtl .hamburger {
+        left: 20px;
+        right: auto;
+      }
+
+      /* Ensure form alignment in RTL */
+      .rtl .form-group label {
+        text-align: right;
+      }
+
+      .rtl input,
+      .rtl textarea {
+        text-align: right;
+      }
+
+      /* Responsive adjustments for RTL mode */
+      @media (max-width: 992px) {
+        .rtl header {
+          padding-right: 1.5cm;
+          padding-left: 1.5cm;
+        }
+
+        .rtl .nav-menu ul {
+          padding-left: 1.5cm;
+          padding-right: 1.5cm;
+        }
+
+        .rtl .logo {
+          margin-right: 0.5cm;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .rtl header {
+          padding-right: 1cm;
+          padding-left: 1cm;
+        }
+
+        .rtl .nav-menu.active {
+          padding-left: 1cm;
+          padding-right: 1cm;
+          left: 0;
+          right: 0;
+        }
+
+        .rtl .nav-menu ul {
+          padding-left: 0.5cm;
+          padding-right: 0.5cm;
+        }
+
+        .rtl .logo {
+          margin-right: 0.3cm;
+        }
+      }
+
+      .rtl .slider {
+        direction: ltr;
+        /* Keep slider direction left-to-right for proper functioning */
+      }
+
+      .rtl .slide-overlay {
+        direction: rtl;
+        text-align: right;
+      }
+
+      .rtl .prev {
+        right: 15px;
+        left: auto;
+      }
+
+      .rtl .next {
+        left: 15px;
+        right: auto;
+      }
+
+      .rtl .pop-out-slider {
+        direction: ltr;
+        /* Keep slider direction left-to-right */
+      }
+
+      .rtl .pop-out-navigation {
+        flex-direction: row-reverse;
+      }
+
+      .rtl .language-dropdown-content {
+        right: 0;
+        left: auto;
+      }
+
+      /* Improved options styling */
+      .options-container {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 15px;
+      }
+
+      .option-btn {
+        transition: all 0.3s ease;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+      }
+
+      .option-btn:hover {
+        transform: translateY(-3px);
+      }
+
+      .rtl .options-container {
+        flex-direction: row;
+        /* Keep same direction even in RTL */
+      }
+
+      /* Make the options more visible in various layouts */
+      @media (max-width: 600px) {
+        .options-container {
+          gap: 12px;
+        }
+
+        .option-btn {
+          padding: 8px 12px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <div class="logo">
+        <h1>inayatransports.fr</h1>
+        <p class="logo-subtitle">Votre chauffeur sur inayatransports</p>
+      </div>
+      <button class="hamburger" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+      </button>
+      <nav class="nav-menu">
+        <ul>
+          <li><a href="#accueil">Accueil</a></li>
+          <li><a href="#services">Nos Services</a></li>
+          <li><a href="#tarifs">Nos Tarifs</a></li>
+          <li><a href="#contact">Contactez-Nous</a></li>
+          <li class="language-dropdown">
+            <img
+              src="assets/images/lang/earth.png"
+              alt="Language Icon"
+              class="language-icon"
+            />
+            <div class="language-dropdown-content">
+              <a href="#">Arabic</a>
+              <a href="#">English</a>
+              <a href="#">French</a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main id="accueil">
+      <div class="reservation-form">
+        <h2>Faire Un Devis</h2>
+        <div class="vehicle-options">
+          <button class="vehicle-btn" data-vehicle="Berline">
+            <img
+              src="assets/images/berline.png"
+              alt="Berline"
+              class="vehicle-img"
+            />
+            Premium
+          </button>
+          <button class="vehicle-btn" data-vehicle="Hybride">
+            <img
+              src="assets/images/hybrid.png"
+              alt="Hybride"
+              class="vehicle-img"
+            />
+            ECO
+          </button>
+          <button class="vehicle-btn" data-vehicle="Van">
+            <img src="assets/images/van.png" alt="Van" class="vehicle-img" />
+            VAN
+          </button>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="depart">Départ</label>
+            <input
+              type="text"
+              id="depart"
+              placeholder="Entrez une adresse"
+              list="depart-suggestions"
+              required
+            />
+            <datalist id="depart-suggestions"></datalist>
+          </div>
+          <div class="form-group">
+            <label for="arrivee">Arrivée</label>
+            <input
+              type="text"
+              id="arrivee"
+              placeholder="Entrez une adresse"
+              list="arrivee-suggestions"
+              required
+            />
+            <datalist id="arrivee-suggestions"></datalist>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="date">Date</label>
+            <input type="date" id="date" required />
+          </div>
+          <div class="form-group">
+            <label for="heure">Heure</label>
+            <input type="time" id="heure" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="options-label">Options supplémentaires</label>
+            <div class="options-container flex justify-center mt-4">
+              <button
+                type="button"
+                class="option-btn mx-3 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 px-5 rounded shadow"
+                data-option="baby-seat"
+              >
+                <img
+                  src="assets/images/supp/siege_bebe.png"
+                  alt="Siège Bébé"
+                  class="w-8 h-8"
+                />
+              </button>
+              <button
+                type="button"
+                class="option-btn mx-3 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 px-5 rounded shadow"
+                data-option="booster-seat"
+              >
+                <img
+                  src="assets/images/supp/rehausseur .png"
+                  alt="Réhausseur"
+                  class="w-8 h-8"
+                />
+              </button>
+              <button
+                type="button"
+                class="option-btn mx-3 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 px-5 rounded shadow"
+                data-option="none"
+              >
+                <i class="fas fa-ban fa-lg"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <input type="hidden" id="vehicle-type" name="vehicle-type" value="" />
+        <button type="button" class="calculate-btn">Calculer</button>
+        <div class="results-container" style="display: none">
+          <div class="form-group">
+            <label for="distance">Distance</label>
+            <input type="text" id="distance" readonly />
+          </div>
+          <div class="form-group">
+            <label for="duration">Durée estimée</label>
+            <input type="text" id="duration" readonly />
+          </div>
+          <div class="form-group">
+            <label for="estimatedPrice">Prix estimé</label>
+            <input type="text" id="estimatedPrice" readonly />
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-text">
+        <h2>Chauffeur 24/24 sur l île de France</h2>
+        <p>Votre chauffeur pour vos transferts sur inayatransports.fr</p>
+      </div>
+    </main>
+
+    <section class="call-to-action">
+      <div class="cta-content">
+        <div class="phone-number">
+          <span class="phone-icon"><i class="fas fa-phone"></i></span>
+          <a href="tel:+33695608776">+33 6 95 60 87 76</a>
+        </div>
+        <a href="#tarifs" class="cta-btn">Nos Tarifs</a>
+      </div>
+    </section>
+
+    <section class="services" id="services">
+      <h2>Bienvenue sur notre site<br />Nos Services</h2>
+      <div class="services-grid">
+        <div class="service-item">
+          <img
+            src="assets/route.png"
+            alt="Itinéraire Libre Icon"
+            class="icon"
+          />
+          <h3>Itinéraire Libre</h3>
+          <p>
+            Profitez du confort de nos véhicules pour tous vos trajets
+            personnels, que vous soyez particulier ou professionnel.
+          </p>
+        </div>
+        <div class="service-item">
+          <img
+            src="assets/chauffeur.png"
+            alt="Mise à Disposition Icon"
+            class="icon"
+          />
+          <h3>Mise à Disposition</h3>
+          <p>
+            Nos chauffeurs s'adaptent à vos besoins avec un service de location
+            de voiture avec chauffeur sur mesure.
+          </p>
+        </div>
+        <div class="service-item">
+          <img
+            src="assets/avion.png"
+            alt="Navette Aéroport Icon"
+            class="icon"
+          />
+          <h3>Navette Aéroport</h3>
+          <p>
+            Réservez facilement votre navette pour vos trajets de ou vers
+            l'aéroport de Nice en quelques clics.
+          </p>
+        </div>
+        <div class="service-item">
+          <img src="assets/a-venir.png" alt="Événementiel Icon" class="icon" />
+          <h3>Événementiel</h3>
+          <p>
+            Transport sur mesure pour vos évènements, en toute sécurité, vers le
+            lieu de vos festivités.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="tariffs" id="tarifs">
+      <h2 class="text-center text-3xl font-bold mb-8">
+        Des véhicules tout confort<br />Nos Tarifs
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto px-4">
+        <div
+          class="bg-white rounded-lg shadow-lg overflow-hidden transform transition hover:scale-105"
+        >
+          <h3 class="text-center text-2xl font-semibold py-4 bg-gray-100">
+            Berline Premium
+          </h3>
+          <div class="relative">
+            <div class="slider-container">
+              <div class="slider" id="premium-slider">
+                <div class="slide">
+                  <img
+                    src="assets/images/cars/Premium.jpg"
+                    alt="Premium"
+                    class="w-full h-auto object-cover"
+                  />
+                  <div class="slide-overlay">
+                    <h4>Luxury at its finest</h4>
+                    <p>Perfect for business trips and special occasions</p>
+                  </div>
+                </div>
+              </div>
+              <div class="slide-indicators" id="premium-indicators">
+                <span
+                  class="indicator active"
+                  onclick="jumpToSlide(0, 'premium')"
+                ></span>
+              </div>
+              <button
+                class="slider-btn prev"
+                onclick="changeSlide(-1, 'premium')"
+              >
+                &#10094;
+              </button>
+              <button
+                class="slider-btn next"
+                onclick="changeSlide(1, 'premium')"
+              >
+                &#10095;
+              </button>
+              <div class="pop-out-trigger" onclick="openPopOut('premium')">
+                <i class="fas fa-expand"></i>
+              </div>
+            </div>
+          </div>
+          <div class="p-6 text-center">
+            <a
+              href="#contact"
+              class="cta-button bg-gradient-to-r from-blue-400 to-blue-600 text-white py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition"
+              >Réserver</a
+            >
+          </div>
+        </div>
+
+        <div
+          class="bg-white rounded-lg shadow-lg overflow-hidden transform transition hover:scale-105"
+        >
+          <h3 class="text-center text-2xl font-semibold py-4 bg-gray-100">
+            Van
+          </h3>
+          <div class="relative">
+            <div class="slider-container">
+              <div class="slider" id="van-slider">
+                <div class="slide">
+                  <img
+                    src="assets/images/cars/van.jpg"
+                    alt="Van 1"
+                    class="w-full h-auto object-cover"
+                  />
+                  <div class="slide-overlay">
+                    <h4>Spacieux et confortable</h4>
+                    <p>Idéal pour les groupes et les familles</p>
+                  </div>
+                </div>
+                <div class="slide">
+                  <img
+                    src="assets/images/cars/van1.jpg"
+                    alt="Van 2"
+                    class="w-full h-auto object-cover"
+                  />
+                  <div class="slide-overlay">
+                    <h4>Intérieur luxueux</h4>
+                    <p>Espace et confort pour tous vos déplacements</p>
+                  </div>
+                </div>
+                <div class="slide">
+                  <img
+                    src="assets/images/cars/van2.jpg"
+                    alt="Van 3"
+                    class="w-full h-auto object-cover"
+                  />
+                  <div class="slide-overlay">
+                    <h4>Élégance et praticité</h4>
+                    <p>Transports de groupe en toute élégance</p>
+                  </div>
+                </div>
+                <div class="slide">
+                  <img
+                    src="assets/images/cars/van3.jpg"
+                    alt="Van 4"
+                    class="w-full h-auto object-cover"
+                  />
+                  <div class="slide-overlay">
+                    <h4>Design moderne</h4>
+                    <p>La solution parfaite pour vos déplacements en groupe</p>
+                  </div>
+                </div>
+                <div class="slide">
+                  <img
+                    src="assets/images/cars/van4.jpg"
+                    alt="Van 5"
+                    class="w-full h-auto object-cover"
+                  />
+                  <div class="slide-overlay">
+                    <h4>Confort optimal</h4>
+                    <p>Pour des trajets agréables en groupe</p>
+                  </div>
+                </div>
+              </div>
+              <div class="slide-indicators" id="van-indicators">
+                <span
+                  class="indicator active"
+                  onclick="jumpToSlide(0, 'van')"
+                ></span>
+                <span class="indicator" onclick="jumpToSlide(1, 'van')"></span>
+                <span class="indicator" onclick="jumpToSlide(2, 'van')"></span>
+                <span class="indicator" onclick="jumpToSlide(3, 'van')"></span>
+                <span class="indicator" onclick="jumpToSlide(4, 'van')"></span>
+              </div>
+              <button class="slider-btn prev" onclick="changeSlide(-1, 'van')">
+                &#10094;
+              </button>
+              <button class="slider-btn next" onclick="changeSlide(1, 'van')">
+                &#10095;
+              </button>
+              <div class="pop-out-trigger" onclick="openPopOut('van')">
+                <i class="fas fa-expand"></i>
+              </div>
+            </div>
+          </div>
+          <div class="p-6 text-center">
+            <a
+              href="#contact"
+              class="cta-button bg-gradient-to-r from-blue-400 to-blue-600 text-white py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition"
+              >Réserver</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pop-out Cards for Sliders -->
+    <div class="overlay-bg" id="overlay-bg"></div>
+
+    <div class="pop-out-card" id="premium-pop-out">
+      <div class="pop-out-header">
+        <h3>Berline Premium</h3>
+        <button class="pop-out-close" onclick="closePopOut()">×</button>
+      </div>
+      <div class="pop-out-slider-container">
+        <div class="pop-out-slider" id="premium-pop-out-slider">
+          <div class="pop-out-slide">
+            <img src="assets/images/cars/Premium.jpg" alt="Premium" />
+          </div>
+        </div>
+      </div>
+      <div class="pop-out-navigation">
+        <button
+          class="pop-out-nav-btn prev"
+          onclick="changePopOutSlide(-1, 'premium')"
+        >
+          <i class="fas fa-arrow-left"></i>
+        </button>
+        <div class="pop-out-indicators" id="premium-pop-out-indicators">
+          <span
+            class="pop-out-indicator active"
+            onclick="jumpToPopOutSlide(0, 'premium')"
+          ></span>
+        </div>
+        <button
+          class="pop-out-nav-btn next"
+          onclick="changePopOutSlide(1, 'premium')"
+        >
+          <i class="fas fa-arrow-right"></i>
+        </button>
+        <button class="pop-out-nav-btn" onclick="closePopOut()">
+          <i class="fas fa-arrow-left"></i> Retour
+        </button>
+      </div>
+    </div>
+
+    <div class="pop-out-card" id="van-pop-out">
+      <div class="pop-out-header">
+        <h3>Van</h3>
+        <button class="pop-out-close" onclick="closePopOut()">×</button>
+      </div>
+      <div class="pop-out-slider-container">
+        <div class="pop-out-slider" id="van-pop-out-slider">
+          <div class="pop-out-slide">
+            <img src="assets/images/cars/van.jpg" alt="Van 1" />
+          </div>
+          <div class="pop-out-slide">
+            <img src="assets/images/cars/van1.jpg" alt="Van 2" />
+          </div>
+          <div class="pop-out-slide">
+            <img src="assets/images/cars/van2.jpg" alt="Van 3" />
+          </div>
+          <div class="pop-out-slide">
+            <img src="assets/images/cars/van3.jpg" alt="Van 4" />
+          </div>
+          <div class="pop-out-slide">
+            <img src="assets/images/cars/van4.jpg" alt="Van 5" />
+          </div>
+        </div>
+      </div>
+      <div class="pop-out-navigation">
+        <button
+          class="pop-out-nav-btn prev"
+          onclick="changePopOutSlide(-1, 'van')"
+        >
+          <i class="fas fa-arrow-left"></i>
+        </button>
+        <div class="pop-out-indicators" id="van-pop-out-indicators">
+          <span
+            class="pop-out-indicator active"
+            onclick="jumpToPopOutSlide(0, 'van')"
+          ></span>
+          <span
+            class="pop-out-indicator"
+            onclick="jumpToPopOutSlide(1, 'van')"
+          ></span>
+          <span
+            class="pop-out-indicator"
+            onclick="jumpToPopOutSlide(2, 'van')"
+          ></span>
+          <span
+            class="pop-out-indicator"
+            onclick="jumpToPopOutSlide(3, 'van')"
+          ></span>
+          <span
+            class="pop-out-indicator"
+            onclick="jumpToPopOutSlide(4, 'van')"
+          ></span>
+        </div>
+        <button
+          class="pop-out-nav-btn next"
+          onclick="changePopOutSlide(1, 'van')"
+        >
+          <i class="fas fa-arrow-right"></i>
+        </button>
+        <button class="pop-out-nav-btn" onclick="closePopOut()">
+          <i class="fas fa-arrow-left"></i> Retour
+        </button>
+      </div>
+    </div>
+
+    <section class="contact" id="contact">
+      <h2>Contactez-Nous</h2>
+      <div class="contact-form">
+        <div class="form-group">
+          <input type="text" id="nom" placeholder="Votre nom" required />
+        </div>
+        <div class="form-group">
+          <input type="email" id="email" placeholder="Votre email" required />
+        </div>
+        <div class="form-group">
+          <textarea
+            id="message"
+            placeholder="Votre message"
+            required
+          ></textarea>
+        </div>
+        <button type="submit" class="contact-btn">Envoyer</button>
+      </div>
+      <div class="contact-info">
+        <p>
+          <strong class="contact-label">Téléphone :</strong>
+          <a href="tel:+33695608776">+33 6 95 60 87 76</a>
+        </p>
+        <p>
+          <strong class="contact-label">Email :</strong>
+          <a href="mailto:contact@taxi-nice.fr">contact@taxi-nice.fr</a>
+        </p>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-section">
+        <h3>inayatransports.fr</h3>
+        <p>
+          inayatransports.fr est à votre disposition 24h/24 et 7j/7 pour vous
+          transporter vers la destination de votre choix. Réservez rapidement en
+          quelques clics.
+        </p>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-section">
+        <h3>Plan du site</h3>
+        <a href="#contact">Contact</a>
+        <a href="#accueil">Devis</a>
+        <a href="#">Mentions légales</a>
+      </div>
+
+      <div class="footer-section">
+        <h3 class="contact-footer-heading">Contactez-nous</h3>
+        <a href="tel:+33988384856">+33 6 95 60 87 76</a>
+        <a href="mailto:contact@taxi-nice.fr">contact@inayatransports.fr</a>
+      </div>
+
+      <div class="footer-bottom">
+        <p>inayatransports.fr 2021 © Tous droits réservés, une création VTC</p>
+      </div>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script src="script.js"></script>
+    <script>
+      // Enhanced slider functionality
+      const sliders = {
+        premium: {
+          currentIndex: 0,
+          maxIndex: 0, // Only 1 image
+          element: null,
+          indicators: [],
+        },
+        van: {
+          currentIndex: 0,
+          maxIndex: 4, // 5 images (0-4)
+          element: null,
+          indicators: [],
+        },
+      };
+
+      // Initialize sliders when DOM is loaded
+      document.addEventListener("DOMContentLoaded", function () {
+        sliders.premium.element = document.querySelector("#premium-slider");
+        sliders.van.element = document.querySelector("#van-slider");
+
+        // Get indicators
+        sliders.premium.indicators = document.querySelectorAll(
+          "#premium-indicators .indicator"
+        );
+        sliders.van.indicators = document.querySelectorAll(
+          "#van-indicators .indicator"
+        );
+
+        // Initialize sliders
+        updateSlideVisibility();
+
+        // Auto-play for van slider
+        setInterval(() => {
+          if (!document.hidden) {
+            // Only auto-play if page is visible
+            changeSlide(1, "van");
+          }
+        }, 5000); // Change slide every 5 seconds
+      });
+
+      function changeSlide(direction, sliderId) {
+        const slider = sliders[sliderId];
+
+        // Adjust direction for RTL in Arabic
+        const isRTL = document.body.classList.contains("rtl");
+        const adjustedDirection = isRTL ? -direction : direction;
+
+        // Update current index
+        slider.currentIndex += adjustedDirection;
+
+        // Loop back to the beginning if at the end
+        if (slider.currentIndex > slider.maxIndex) {
+          slider.currentIndex = 0;
+        }
+
+        // Loop to the end if at the beginning
+        if (slider.currentIndex < 0) {
+          slider.currentIndex = slider.maxIndex;
+        }
+
+        updateSlider(sliderId);
+      }
+
+      function jumpToSlide(index, sliderId) {
+        const slider = sliders[sliderId];
+        slider.currentIndex = index;
+        updateSlider(sliderId);
+      }
+
+      function updateSlider(sliderId) {
+        const slider = sliders[sliderId];
+
+        // Update slider position with smooth animation
+        slider.element.style.transform = `translateX(-${
+          slider.currentIndex * 100
+        }%)`;
+
+        // Update indicators
+        slider.indicators.forEach((indicator, index) => {
+          if (index === slider.currentIndex) {
+            indicator.classList.add("active");
+          } else {
+            indicator.classList.remove("active");
+          }
+        });
+      }
+
+      function updateSlideVisibility() {
+        // Make sure initial position is correct
+        sliders.premium.element.style.transform = "translateX(0)";
+        sliders.van.element.style.transform = "translateX(0)";
+
+        // Ensure first indicator is active
+        sliders.premium.indicators[0].classList.add("active");
+        sliders.van.indicators[0].classList.add("active");
+      }
+
+      // Pop-out card functionality
+      const popOutSliders = {
+        premium: {
+          currentIndex: 0,
+          maxIndex: 0,
+          element: null,
+          indicators: [],
+        },
+        van: {
+          currentIndex: 0,
+          maxIndex: 4,
+          element: null,
+          indicators: [],
+        },
+      };
+
+      // Initialize pop-out sliders
+      document.addEventListener("DOMContentLoaded", function () {
+        // ... existing initialization ...
+
+        // Initialize pop-out elements
+        popOutSliders.premium.element = document.querySelector(
+          "#premium-pop-out-slider"
+        );
+        popOutSliders.van.element = document.querySelector(
+          "#van-pop-out-slider"
+        );
+
+        popOutSliders.premium.indicators = document.querySelectorAll(
+          "#premium-pop-out-indicators .pop-out-indicator"
+        );
+        popOutSliders.van.indicators = document.querySelectorAll(
+          "#van-pop-out-indicators .pop-out-indicator"
+        );
+
+        // Add keyboard event listener for pop-out navigation
+        document.addEventListener("keydown", function (event) {
+          const activePopOut = document.querySelector(".pop-out-card.active");
+          if (!activePopOut) return;
+
+          const type = activePopOut.id.split("-")[0]; // premium or van
+
+          if (event.key === "Escape") {
+            closePopOut();
+          } else if (event.key === "ArrowLeft") {
+            changePopOutSlide(-1, type);
+          } else if (event.key === "ArrowRight") {
+            changePopOutSlide(1, type);
+          }
+        });
+
+        // Close popup when clicking outside
+        document
+          .getElementById("overlay-bg")
+          .addEventListener("click", closePopOut);
+      });
+
+      function openPopOut(type) {
+        // Get current index from main slider
+        const mainIndex = sliders[type].currentIndex;
+
+        // Set the same index in pop-out slider
+        popOutSliders[type].currentIndex = mainIndex;
+        updatePopOutSlider(type);
+
+        // Show pop-out and overlay
+        document.getElementById(`${type}-pop-out`).classList.add("active");
+        document.getElementById("overlay-bg").classList.add("active");
+
+        // Disable page scrolling
+        document.body.style.overflow = "hidden";
+      }
+
+      function closePopOut() {
+        // Hide all pop-outs and overlay
+        document.querySelectorAll(".pop-out-card").forEach((card) => {
+          card.classList.remove("active");
+        });
+        document.getElementById("overlay-bg").classList.remove("active");
+
+        // Re-enable page scrolling
+        document.body.style.overflow = "";
+      }
+
+      function changePopOutSlide(direction, type) {
+        const slider = popOutSliders[type];
+
+        // Adjust direction for RTL in Arabic
+        const isRTL = document.body.classList.contains("rtl");
+        const adjustedDirection = isRTL ? -direction : direction;
+
+        slider.currentIndex += adjustedDirection;
+
+        // Loop back to the beginning if at the end
+        if (slider.currentIndex > slider.maxIndex) {
+          slider.currentIndex = 0;
+        }
+
+        // Loop to the end if at the beginning
+        if (slider.currentIndex < 0) {
+          slider.currentIndex = slider.maxIndex;
+        }
+
+        updatePopOutSlider(type);
+      }
+
+      function jumpToPopOutSlide(index, type) {
+        popOutSliders[type].currentIndex = index;
+        updatePopOutSlider(type);
+      }
+
+      function updatePopOutSlider(type) {
+        const slider = popOutSliders[type];
+
+        // Update slider position
+        slider.element.style.transform = `translateX(-${
+          slider.currentIndex * 100
+        }%)`;
+
+        // Update indicators
+        slider.indicators.forEach((indicator, index) => {
+          if (index === slider.currentIndex) {
+            indicator.classList.add("active");
+          } else {
+            indicator.classList.remove("active");
+          }
+        });
+
+        // Sync with main slider
+        sliders[type].currentIndex = slider.currentIndex;
+        updateSlider(type);
+      }
+
+      // Function to toggle checked state
+      document.querySelectorAll(".option-btn").forEach((button) => {
+        button.addEventListener("click", () => {
+          // Remove 'checked' class from all buttons
+          document
+            .querySelectorAll(".option-btn")
+            .forEach((btn) =>
+              btn.classList.remove("bg-blue-500", "text-white")
+            );
+          // Add 'checked' class to the clicked button
+          button.classList.add("bg-blue-500", "text-white");
+        });
+      });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <script>
+      // Language translations
+      const translations = {
+        fr: {
+          accueil: "Accueil",
+          services: "Nos Services",
+          tarifs: "Nos Tarifs",
+          contact: "Contactez-Nous",
+          devis: "Faire Un Devis",
+          depart: "Départ",
+          arrivee: "Arrivée",
+          date: "Date",
+          heure: "Heure",
+          options: "Options supplémentaires",
+          calculer: "Calculer",
+          distance: "Distance",
+          duree: "Durée estimée",
+          reserver: "Réserver Maintenant",
+          hero_title: "Chauffeur 24/24 sur l île de France",
+          hero_subtitle:
+            "Votre chauffeur pour vos transferts sur inayatransports.fr",
+          bienvenue: "Bienvenue sur notre site<br />Nos Services",
+          itineraire: "Itinéraire Libre",
+          itineraire_desc:
+            "Profitez du confort de nos véhicules pour tous vos trajets personnels, que vous soyez particulier ou professionnel.",
+          disposition: "Mise à Disposition",
+          disposition_desc:
+            "Nos chauffeurs s'adaptent à vos besoins avec un service de location de voiture avec chauffeur sur mesure.",
+          navette: "Navette Aéroport",
+          navette_desc:
+            "Réservez facilement votre navette pour vos trajets de ou vers l'aéroport de Nice en quelques clics.",
+          evenementiel: "Événementiel",
+          evenementiel_desc:
+            "Transport sur mesure pour vos évènements, en toute sécurité, vers le lieu de vos festivités.",
+          vehicles_title: "Des véhicules tout confort<br />Nos Tarifs",
+          berline_title: "Berline Premium",
+          van_title: "Van",
+          slide_luxury: "Luxury at its finest",
+          slide_business: "Perfect for business trips and special occasions",
+          slide_spacieux: "Spacieux et confortable",
+          slide_ideal: "Idéal pour les groupes et les familles",
+          slide_interieur: "Intérieur luxueux",
+          slide_espace: "Espace et confort pour tous vos déplacements",
+          slide_elegance: "Élégance et praticité",
+          slide_transport: "Transports de groupe en toute élégance",
+          slide_design: "Design moderne",
+          slide_solution:
+            "La solution parfaite pour vos déplacements en groupe",
+          slide_confort: "Confort optimal",
+          slide_trajet: "Pour des trajets agréables en groupe",
+          btn_reserver: "Réserver",
+          retour: "Retour",
+          contact_title: "Contactez-Nous",
+          envoyer: "Envoyer",
+          telephone: "Téléphone :",
+          email_contact: "Email :",
+          footer_desc:
+            "inayatransports.fr est à votre disposition 24h/24 et 7j/7 pour vous transporter vers la destination de votre choix. Réservez rapidement en quelques clics.",
+          plan_site: "Plan du site",
+          contact_footer: "Contact",
+          devis_footer: "Devis",
+          mentions: "Mentions légales",
+          contactez: "Contactez-nous",
+          copyright:
+            "inayatransports.fr 2021 © Tous droits réservés, une création VTC",
+          cities_alert:
+            "Veuillez entrer des villes valides parmi : Paris, Marseille, Lyon, Toulouse, Nice, Nantes, Strasbourg, Montpellier, Bordeaux, Lille",
+          placeholder_adresse: "Entrez une adresse",
+          placeholder_nom: "Votre nom",
+          placeholder_email: "Votre email",
+          placeholder_message: "Votre message",
+          premium: "Premium",
+          eco: "ECO",
+          van: "VAN",
+          logo_subtitle: "Votre chauffeur sur inayatransports",
+          error_both_cities:
+            "Les villes de départ et d'arrivée ne sont pas reconnues. Veuillez entrer des villes valides.",
+          error_departure_city:
+            "La ville de départ n'est pas reconnue. Veuillez entrer une ville valide.",
+          error_arrival_city:
+            "La ville d'arrivée n'est pas reconnue. Veuillez entrer une ville valide.",
+        },
+        en: {
+          accueil: "Home",
+          services: "Our Services",
+          tarifs: "Our Rates",
+          contact: "Contact Us",
+          devis: "Get a Quote",
+          depart: "Departure",
+          arrivee: "Arrival",
+          date: "Date",
+          heure: "Time",
+          options: "Additional options",
+          calculer: "Calculate",
+          distance: "Distance",
+          duree: "Estimated duration",
+          reserver: "Book Now",
+          hero_title: "Driver available 24/7 in Île-de-France",
+          hero_subtitle: "Your driver for all transfers on inayatransports.fr",
+          bienvenue: "Welcome to our website<br />Our Services",
+          itineraire: "Free Itinerary",
+          itineraire_desc:
+            "Enjoy the comfort of our vehicles for all your personal trips, whether you are a private individual or a professional.",
+          disposition: "At Your Disposal",
+          disposition_desc:
+            "Our drivers adapt to your needs with a tailor-made car rental service with driver.",
+          navette: "Airport Shuttle",
+          navette_desc:
+            "Easily book your shuttle for your trips to or from Nice airport in just a few clicks.",
+          evenementiel: "Events",
+          evenementiel_desc:
+            "Tailor-made transport for your events, in complete safety, to the location of your festivities.",
+          vehicles_title: "Comfortable vehicles<br />Our Rates",
+          berline_title: "Premium Sedan",
+          van_title: "Van",
+          slide_luxury: "Luxury at its finest",
+          slide_business: "Perfect for business trips and special occasions",
+          slide_spacieux: "Spacious and comfortable",
+          slide_ideal: "Ideal for groups and families",
+          slide_interieur: "Luxurious interior",
+          slide_espace: "Space and comfort for all your trips",
+          slide_elegance: "Elegance and practicality",
+          slide_transport: "Group transport in elegance",
+          slide_design: "Modern design",
+          slide_solution: "The perfect solution for your group travel",
+          slide_confort: "Optimal comfort",
+          slide_trajet: "For pleasant group trips",
+          btn_reserver: "Book",
+          retour: "Back",
+          contact_title: "Contact Us",
+          envoyer: "Send",
+          telephone: "Phone:",
+          email_contact: "Email:",
+          footer_desc:
+            "inayatransports.fr is at your disposal 24/7 to transport you to the destination of your choice. Book quickly in just a few clicks.",
+          plan_site: "Site map",
+          contact_footer: "Contact",
+          devis_footer: "Quote",
+          mentions: "Legal notices",
+          contactez: "Contact us",
+          copyright:
+            "inayatransports.fr 2021 © All rights reserved, a VTC creation",
+          cities_alert:
+            "Please enter valid cities among: Paris, Marseille, Lyon, Toulouse, Nice, Nantes, Strasbourg, Montpellier, Bordeaux, Lille",
+          placeholder_adresse: "Enter an address",
+          placeholder_nom: "Your name",
+          placeholder_email: "Your email",
+          placeholder_message: "Your message",
+          premium: "Premium",
+          eco: "ECO",
+          van: "VAN",
+          logo_subtitle: "Your driver on inayatransports",
+          error_both_cities:
+            "Both departure and arrival cities are not recognized. Please enter valid cities.",
+          error_departure_city:
+            "The departure city is not recognized. Please enter a valid city.",
+          error_arrival_city:
+            "The arrival city is not recognized. Please enter a valid city.",
+        },
+        ar: {
+          accueil: "الرئيسية",
+          services: "خدماتنا",
+          tarifs: "أسعارنا",
+          contact: "اتصل بنا",
+          devis: "احصل على تقدير سعر",
+          depart: "المغادرة",
+          arrivee: "الوصول",
+          date: "التاريخ",
+          heure: "الوقت",
+          options: "خيارات إضافية",
+          calculer: "حساب",
+          distance: "المسافة",
+          duree: "المدة المقدرة",
+          reserver: "احجز الآن",
+          hero_title: "سائق متاح على مدار الساعة في جزيرة فرنسا ",
+          hero_subtitle: "سائقك لجميع التنقلات على inayatransports.fr",
+          bienvenue: "مرحبًا بكم في موقعنا<br />خدماتنا",
+          itineraire: "مسار حر",
+          itineraire_desc:
+            "استمتع براحة سياراتنا لجميع رحلاتك الشخصية، سواء كنت فردًا أو محترفًا.",
+          disposition: "تحت تصرفكم",
+          disposition_desc:
+            "يتكيف سائقونا مع احتياجاتك مع خدمة تأجير سيارات مخصصة مع سائق.",
+          navette: "نقل المطار",
+          navette_desc:
+            "احجز نقل المطار بسهولة للرحلات من وإلى مطار نيس بنقرات قليلة فقط.",
+          evenementiel: "الفعاليات",
+          evenementiel_desc:
+            "نقل مخصص للفعاليات الخاصة بك، بأمان تام، إلى مكان احتفالاتك.",
+          vehicles_title: "سيارات مريحة<br />أسعارنا",
+          berline_title: "سيدان فاخرة",
+          van_title: "حافلة صغيرة",
+          slide_luxury: "الفخامة في أفضل حالاتها",
+          slide_business: "مثالي للرحلات التجارية والمناسبات الخاصة",
+          slide_spacieux: "فسيح ومريح",
+          slide_ideal: "مثالي للمجموعات والعائلات",
+          slide_interieur: "تصميم داخلي فاخر",
+          slide_espace: "مساحة وراحة لجميع رحلاتك",
+          slide_elegance: "أناقة وعملية",
+          slide_transport: "نقل المجموعات بأناقة",
+          slide_design: "تصميم عصري",
+          slide_solution: "الحل المثالي لسفر المجموعات",
+          slide_confort: "راحة مثالية",
+          slide_trajet: "لرحلات جماعية ممتعة",
+          btn_reserver: "حجز",
+          retour: "رجوع",
+          contact_title: "اتصل بنا",
+          envoyer: "إرسال",
+          telephone: "الهاتف:",
+          email_contact: "البريد الإلكتروني:",
+          footer_desc:
+            "inayatransports.fr في خدمتكم على مدار الساعة طوال أيام الأسبوع لنقلكم إلى الوجهة التي تختارونها. احجز بسرعة بنقرات قليلة.",
+          plan_site: "خريطة الموقع",
+          contact_footer: "الاتصال",
+          devis_footer: "تقدير السعر",
+          mentions: "الإشعارات القانونية",
+          contactez: "اتصل بنا",
+          copyright: "inayatransports.fr 2021 © جميع الحقوق محفوظة، إنشاء VTC",
+          cities_alert:
+            "الرجاء إدخال مدن صالحة من بين: باريس، مرسيليا، ليون، تولوز، نيس، نانت، ستراسبورغ، مونبلييه، بوردو، ليل",
+          placeholder_adresse: "أدخل عنوانًا",
+          placeholder_nom: "اسمك",
+          placeholder_email: "بريدك الإلكتروني",
+          placeholder_message: "رسالتك",
+          premium: "فاخر",
+          eco: "اقتصادي",
+          van: "حافلة",
+          logo_subtitle: "سائقك على inayatransports",
+          error_both_cities:
+            "لم يتم التعرف على مدن المغادرة والوصول. الرجاء إدخال مدن صالحة.",
+          error_departure_city:
+            "لم يتم التعرف على مدينة المغادرة. الرجاء إدخال مدينة صالحة.",
+          error_arrival_city:
+            "لم يتم التعرف على مدينة الوصول. الرجاء إدخال مدينة صالحة.",
+        },
+      };
+
+      // Elements to update when changing language
+      const elementsToUpdate = {
+        accueil: 'a[href="#accueil"]',
+        services: 'a[href="#services"]',
+        tarifs: 'a[href="#tarifs"]',
+        contact: 'a[href="#contact"]',
+        devis: ".reservation-form h2",
+        depart: 'label[for="depart"]',
+        arrivee: 'label[for="arrivee"]',
+        date: 'label[for="date"]',
+        heure: 'label[for="heure"]',
+        options: ".options-label",
+        calculer: ".calculate-btn",
+        distance: 'label[for="distance"]',
+        duree: 'label[for="duration"]',
+        reserver: ".reserve-btn",
+        hero_title: ".hero-text h2",
+        hero_subtitle: ".hero-text p",
+        bienvenue: ".services h2",
+        itineraire: ".service-item:nth-child(1) h3",
+        itineraire_desc: ".service-item:nth-child(1) p",
+        disposition: ".service-item:nth-child(2) h3",
+        disposition_desc: ".service-item:nth-child(2) p",
+        navette: ".service-item:nth-child(3) h3",
+        navette_desc: ".service-item:nth-child(3) p",
+        evenementiel: ".service-item:nth-child(4) h3",
+        evenementiel_desc: ".service-item:nth-child(4) p",
+        vehicles_title: ".tariffs h2",
+        berline_title: "#premium-pop-out h3, .bg-white:nth-child(1) h3",
+        van_title: "#van-pop-out h3, .bg-white:nth-child(2) h3",
+        slide_luxury: "#premium-slider .slide-overlay h4",
+        slide_business: "#premium-slider .slide-overlay p",
+        slide_spacieux: "#van-slider .slide:nth-child(1) .slide-overlay h4",
+        slide_ideal: "#van-slider .slide:nth-child(1) .slide-overlay p",
+        slide_interieur: "#van-slider .slide:nth-child(2) .slide-overlay h4",
+        slide_espace: "#van-slider .slide:nth-child(2) .slide-overlay p",
+        slide_elegance: "#van-slider .slide:nth-child(3) .slide-overlay h4",
+        slide_transport: "#van-slider .slide:nth-child(3) .slide-overlay p",
+        slide_design: "#van-slider .slide:nth-child(4) .slide-overlay h4",
+        slide_solution: "#van-slider .slide:nth-child(4) .slide-overlay p",
+        slide_confort: "#van-slider .slide:nth-child(5) .slide-overlay h4",
+        slide_trajet: "#van-slider .slide:nth-child(5) .slide-overlay p",
+        btn_reserver: ".cta-button",
+        retour: '.pop-out-nav-btn:contains("Retour")',
+        contact_title: ".contact h2",
+        envoyer: ".contact-btn",
+        telephone: ".contact-label:nth-of-type(1)",
+        email_contact: ".contact-label:nth-of-type(2)",
+        footer_desc: ".footer-section:nth-child(1) p",
+        plan_site: ".footer-section:nth-child(2) h3",
+        contact_footer: '.footer-section:nth-child(2) a[href="#contact"]',
+        devis_footer: '.footer-section:nth-child(2) a[href="#accueil"]',
+        mentions: '.footer-section:nth-child(2) a[href="#"]:last-child',
+        contactez: ".contact-footer-heading",
+        copyright: ".footer-bottom p",
+        logo_subtitle: ".logo-subtitle",
+      };
+
+      // Set the default language
+      let currentLanguage = "fr";
+
+      // Function to change the language
+      function changeLanguage(lang) {
+        if (!translations[lang]) return;
+
+        currentLanguage = lang;
+
+        // Update text content for all elements
+        for (const [key, selector] of Object.entries(elementsToUpdate)) {
+          try {
+            const elements = document.querySelectorAll(selector);
+            if (elements.length > 0) {
+              elements.forEach((el) => {
+                if (
+                  key === "bienvenue" ||
+                  key === "vehicles_title" ||
+                  key.includes("hero_")
+                ) {
+                  el.innerHTML = translations[lang][key];
+                } else {
+                  el.textContent = translations[lang][key];
+                }
+              });
+            }
+          } catch (error) {
+            console.log(`Error updating ${key}: ${error.message}`);
+          }
+        }
+
+        // Special handling for email contact text
+        try {
+          const emailLabels = document.querySelectorAll(
+            ".contact-label:nth-of-type(2)"
+          );
+          if (emailLabels.length > 0) {
+            emailLabels.forEach((label) => {
+              label.textContent = translations[lang]["email_contact"];
+            });
+          }
+        } catch (error) {
+          console.log(`Error updating email contact: ${error.message}`);
+        }
+
+        // Update placeholders
+        document.getElementById("depart").placeholder =
+          translations[lang]["placeholder_adresse"];
+        document.getElementById("arrivee").placeholder =
+          translations[lang]["placeholder_adresse"];
+        document.getElementById("nom").placeholder =
+          translations[lang]["placeholder_nom"];
+        document.getElementById("email").placeholder =
+          translations[lang]["placeholder_email"];
+        document.getElementById("message").placeholder =
+          translations[lang]["placeholder_message"];
+
+        // Update vehicle types
+        document.querySelectorAll(".vehicle-btn").forEach((btn, index) => {
+          const types = ["premium", "eco", "van"];
+          const textNode = Array.from(btn.childNodes).find(
+            (node) => node.nodeType === 3
+          ); // Find text node
+          if (textNode) {
+            // Preserve spacing
+            textNode.nodeValue = textNode.nodeValue.replace(
+              textNode.nodeValue.trim(),
+              translations[lang][types[index]]
+            );
+          }
+        });
+
+        // Update RTL for Arabic
+        if (lang === "ar") {
+          document.documentElement.dir = "rtl";
+          document.body.classList.add("rtl");
+        } else {
+          document.documentElement.dir = "ltr";
+          document.body.classList.remove("rtl");
+        }
+
+        // Reset all sliders to ensure they display correctly in the new language
+        resetAllSliders();
+
+        // Store the selected language in localStorage
+        localStorage.setItem("selectedLanguage", lang);
+      }
+
+      // Function to reset all sliders to their initial state
+      function resetAllSliders() {
+        if (!sliders.premium.element || !sliders.van.element) return;
+
+        // Reset main sliders
+        sliders.premium.currentIndex = 0;
+        sliders.van.currentIndex = 0;
+
+        sliders.premium.element.style.transform = "translateX(0)";
+        sliders.van.element.style.transform = "translateX(0)";
+
+        // Update indicators
+        sliders.premium.indicators.forEach((indicator, index) => {
+          indicator.classList.toggle("active", index === 0);
+        });
+
+        sliders.van.indicators.forEach((indicator, index) => {
+          indicator.classList.toggle("active", index === 0);
+        });
+
+        // Reset pop-out sliders if they exist
+        if (popOutSliders.premium.element) {
+          popOutSliders.premium.currentIndex = 0;
+          popOutSliders.premium.element.style.transform = "translateX(0)";
+
+          popOutSliders.premium.indicators.forEach((indicator, index) => {
+            indicator.classList.toggle("active", index === 0);
+          });
+        }
+
+        if (popOutSliders.van.element) {
+          popOutSliders.van.currentIndex = 0;
+          popOutSliders.van.element.style.transform = "translateX(0)";
+
+          popOutSliders.van.indicators.forEach((indicator, index) => {
+            indicator.classList.toggle("active", index === 0);
+          });
+        }
+      }
+
+      // Add event listeners to language selector links
+      document.addEventListener("DOMContentLoaded", function () {
+        const langLinks = document.querySelectorAll(
+          ".language-dropdown-content a"
+        );
+
+        langLinks.forEach((link) => {
+          link.addEventListener("click", function (e) {
+            e.preventDefault();
+            const lang = this.textContent.toLowerCase();
+            const langMap = { arabic: "ar", english: "en", french: "fr" };
+
+            if (langMap[lang]) {
+              changeLanguage(langMap[lang]);
+            }
+          });
+        });
+
+        // Always initialize with French
+        changeLanguage("fr");
+
+        // Override alert for cities validation
+        const oldAlert = window.alert;
+        window.alert = function (message) {
+          if (
+            message ===
+            "Veuillez entrer des villes valides parmi : Paris, Marseille, Lyon, Toulouse, Nice, Nantes, Strasbourg, Montpellier, Bordeaux, Lille"
+          ) {
+            oldAlert(translations[currentLanguage]["cities_alert"]);
+          } else {
+            oldAlert(message);
+          }
+        };
+      });
+    </script>
+  </body>
+</html>
